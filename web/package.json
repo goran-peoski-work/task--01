@@ -1,8 +1,12 @@
 {
-  "name": "web",
+  "name": "@task/web",
   "private": true,
   "version": "0.0.1",
   "type": "module",
+  "imports": {
+    "#web/*": "./src/*",
+    "#shared/*": "../shared/src/*"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,6 +14,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.101.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },

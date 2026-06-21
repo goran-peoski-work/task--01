@@ -10,5 +10,13 @@ export default defineConfig([
         extends: ['js/recommended'],
         languageOptions: { globals: { ...globals.browser, ...globals.node } },
     },
+
     tsEslint.configs.recommended,
+
+    {
+        rules: {
+            curly: ['error', 'multi-line'],
+            'arrow-body-style': ['error', 'as-needed'],
+        },
+    },
 ]);
