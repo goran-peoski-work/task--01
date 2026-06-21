@@ -7,8 +7,22 @@
     "web",
     "packages/*"
   ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=@task/api",
+    "dev:web": "npm run dev --workspace=@task/web",
+    "build:api": "npm run build --workspace=@task/api",
+    "build:web": "npm run build --workspace=@task/web",
+    "check:lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "check:format": "prettier --write .",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\""
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true,
+    "esbuild@0.28.1": true
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "concurrently": "^10.0.3",
     "eslint": "^10.5.0",
     "globals": "^17.6.0",
     "prettier": "^3.8.4",
