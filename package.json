@@ -15,7 +15,8 @@
     "build:web": "npm run build --workspace=@task/web",
     "check:lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "check:format": "prettier --write .",
-    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\""
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "prepare": "husky"
   },
   "allowScripts": {
     "fsevents@2.3.3": true,
@@ -26,6 +27,8 @@
     "concurrently": "^10.0.3",
     "eslint": "^10.5.0",
     "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
     "prettier": "^3.8.4",
     "typescript-eslint": "^8.61.1"
   }

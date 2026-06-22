@@ -27,7 +27,7 @@ const pingApi: NullaryAsync<FetchResult> = async () => {
     if (!response.ok) return { ok: false, message: `Ping failed: ${response.status}` };
 
     const json = await response.json();
-    if (isPingResponse(json)) return { ok: true, json: json };
+    if (isPingResponse(json)) return { ok: true, json };
 
     return { ok: false, message: 'Bad ping response', json };
 };
