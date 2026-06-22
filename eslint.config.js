@@ -17,6 +17,7 @@ export default defineConfig([
         rules: {
             curly: ['error', 'multi-line'],
             'arrow-body-style': ['error', 'as-needed'],
+            'object-shorthand': ['error', 'always'],
         },
     },
 ]);

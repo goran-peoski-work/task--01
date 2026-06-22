@@ -11,20 +11,25 @@ type PingResponse = {
     data: string;
 };
 
-const isPingResponse = (value: unknown): value is PingResponse => {
-    const { data, success } = (value as Partial<PingResponse>) ?? {};
-    return true === success && 'string' === typeof data;
-};
+type FetchResult = { ok: true; json: PingResponse } | { ok: false; message: string; json?: ParsedJson<PingResponse> };
 
-const pingApi: () => Promise<PingResponse> = async () => {
+type NullaryAsync<R> = () => Promise<R>;
+
+type Nullable<T> = T | null | undefined;
+type ParsedJson<T> = Nullable<Partial<T>>;
+
+const isPingResponse = (value: ParsedJson<PingResponse>): value is PingResponse =>
+    true === value?.success && 'string' === typeof value?.data;
+
+const pingApi: NullaryAsync<FetchResult> = async () => {
     const response = await fetch('/api/v1/ping');
 
-    if (!response.ok) throw new Error(`Ping failed: ${response.status}`);
+    if (!response.ok) return { ok: false, message: `Ping failed: ${response.status}` };
 
-    const json: unknown = await response.json();
-    if (isPingResponse(json)) return json;
+    const json = await response.json();
+    if (isPingResponse(json)) return { ok: true, json: json };
 
-    throw new Error('Bad ping' + String(json));
+    return { ok: false, message: 'Bad ping response', json };
 };
 
 const PingContent: Component = () => {
@@ -33,7 +38,7 @@ const PingContent: Component = () => {
         queryFn: pingApi,
     });
 
-    return <div>Ping: {body.data}</div>;
+    return <div>Ping: {body.json?.data}</div>;
 };
 
 const Ping: Component = () => (
