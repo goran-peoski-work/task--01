@@ -4,8 +4,7 @@
   "type": "module",
   "main": "dist/index.js",
   "imports": {
-    "#api/*": "./src/*.ts",
-    "#shared/*": "../packages/shared/src/*.ts"
+    "#api/*": "./src/*"
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",

@@ -4,8 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "imports": {
-    "#web/*": "./src/*",
-    "#shared/*": "../shared/src/*"
+    "#web/*": "./src/*"
   },
   "scripts": {
     "dev": "vite",
