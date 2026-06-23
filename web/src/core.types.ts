@@ -1,4 +1,4 @@
-import type { Nullable, NullaryAsync, Unary } from '@task/shared/src/functional.types.ts';
+import type { Nullable, NullaryAsync, Unary } from '@task/shared/functional.types';
 import * as React from 'react';
 
 /**

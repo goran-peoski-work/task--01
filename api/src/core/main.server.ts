@@ -1,10 +1,9 @@
 import { pingRoute } from '#api/routes/ping.route.js';
 import Fastify from 'fastify';
 
+type ErrorToString = (error: unknown) => string;
 
-type ErrorToString = (error: any) => string;
-
-const errorToString: ErrorToString = (error) => String(error?.message ?? error);
+const errorToString: ErrorToString = (error) => String((error as Error)?.message).trim() || String(error).trim();
 
 type ServerInstance = ReturnType<typeof Fastify>;
 
@@ -21,7 +20,7 @@ export const startServer: StartServer = async ({ port, host }) => {
         server.register(pingRoute, { prefix: '/api/v1' });
 
         return server
-            .listen({ port: port, host: host })
+            .listen({ port, host })
             .then((address): StartSuccess => ({ success: true, server, data: address }))
             .catch((error): StartFailure => ({ success: false, server, error: errorToString(error) }));
     } catch (error: unknown) {

@@ -1,5 +1,5 @@
 {
-  "name": "interview-task",
+  "name": "@task/root",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -9,14 +9,23 @@
     "packages/*"
   ],
   "scripts": {
+    "dev:shared": "npm run dev --workspace=@task/shared",
     "dev:api": "npm run dev --workspace=@task/api",
     "dev:web": "npm run dev --workspace=@task/web",
+    "build:shared": "npm run build --workspace=@task/shared",
     "build:api": "npm run build --workspace=@task/api",
     "build:web": "npm run build --workspace=@task/web",
+    "check:types": "npm run build --workspace=@task/shared && npm run check:types --workspace=@task/api --workspace=@task/web",
     "check:lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "check:format": "prettier --write .",
-    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
-    "prepare": "husky"
+    "check:format": "prettier --check .",
+    "fix:lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "fix:format": "prettier --write .",
+    "check": "npm run check:types && npm run check:lint && npm run check:format",
+    "fix": "npm run fix:lint && npm run fix:format",
+    "build": "npm run build:shared && npm run build:api && npm run build:web",
+    "predev": "npm run build:shared",
+    "dev": "concurrently \"npm run dev:shared\" \"npm run dev:api\" \"npm run dev:web\"",
+    "prepare": "node .husky/prepare.script.mjs"
   },
   "allowScripts": {
     "fsevents@2.3.3": true,

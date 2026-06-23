@@ -3,13 +3,10 @@
     "target": "es2023",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "baseUrl": ".",
     "ignoreDeprecations": "6.0",
     "rootDir": "src",
     "outDir": "dist",
-    "paths": {
-      "#api/*": ["src/*"]
-    },
+    "declaration": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
