@@ -15,6 +15,7 @@
     "fix:lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "fix:format": "prettier --write .",
     "fix": "npm run fix:lint && npm run fix:format",
+    "predev": "docker compose up -d db",
     "dev": "tsx watch --conditions=development src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"

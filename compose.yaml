@@ -6,6 +6,8 @@ services:
             target: production
         ports:
             - '3000:3000'
+        depends_on:
+            - db
         environment:
             NODE_ENV: production
 
@@ -18,3 +20,18 @@ services:
             - '8080:80'
         depends_on:
             - api
+
+    db:
+        image: postgres:15-alpine
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER:-pg_missing_user}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pg_missing_pass}
+            POSTGRES_DB: ${POSTGRES_DB:-pg_missing_db}
+        ports:
+            - '5432:5432'
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+            - ./api/db/postgres-init:/docker-entrypoint-initdb.d
+
+volumes:
+    pgdata:
