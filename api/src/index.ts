@@ -4,11 +4,13 @@ import { startServer } from '#api/core/main.server.js';
 const result = await startServer({ port: SERVER_PORT, host: SERVER_HOST });
 
 if (result.success) {
-    result.server.log.info(`Listening @ ${result.data}...`);
-} else if (result.server) {
-    result.server.log.error(result.error);
-    process.exit(1);
+    const log = result.data.server.log;
+    log.info(`Listening @ ${result.data}...`);
 } else {
-    console.error(result.error);
+    const log = result.error.server?.log;
+
+    if (log) log.error(result.error);
+    else console.error(result.error);
+
     process.exit(1);
 }

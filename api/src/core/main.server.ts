@@ -4,23 +4,22 @@ import {
     serverPreSerializationHook,
 } from '#api/core/interceptors.server.js';
 import { routesV1 } from '#api/routes/version1.routes.js';
+import { Nullable, Result } from '@task/shared/types/core.types';
 import { UnaryAsync } from '@task/shared/types/functional.types';
 import { errorToString } from '@task/shared/utils/transform.utils';
 import Fastify from 'fastify';
 
-type StartServerOptions = { port: number; host: string };
-
 type ServerInstance = ReturnType<typeof Fastify>;
-type StartResult =
-    | { success: true; server: ServerInstance; data: string }
-    | { success: false; server: ServerInstance; error: string }
-    | { success: false; server: null; error: string };
 
-type StartServer = UnaryAsync<StartServerOptions, StartResult>;
+type StartServer = UnaryAsync<
+    { port: number; host: string },
+    Result<{ server: ServerInstance; address: string }, { server: Nullable<ServerInstance>; message: string }>
+>;
 
 export const startServer: StartServer = async ({ port, host }) => {
+    let server;
     try {
-        const server = Fastify({
+        server = Fastify({
             logger: true,
             routerOptions: {
                 ignoreTrailingSlash: true,
@@ -32,12 +31,14 @@ export const startServer: StartServer = async ({ port, host }) => {
         server.setNotFoundHandler(serverNotFoundHandler);
 
         server.register(routesV1, { prefix: '/api/v1' });
+    } catch (e: unknown) {
+        return { success: false, error: { server, message: errorToString(e) } };
+    }
 
-        return server
-            .listen({ port, host })
-            .then((address): StartResult => ({ success: true, server, data: address }))
-            .catch((error): StartResult => ({ success: false, server, error: errorToString(error) }));
-    } catch (error: unknown) {
-        return { success: false, server: null, error: String(error) };
+    try {
+        const address = await server.listen({ port, host });
+        return { success: true, data: { server, address } };
+    } catch (e: unknown) {
+        return { success: false, error: { server, message: errorToString(e) } };
     }
 };
