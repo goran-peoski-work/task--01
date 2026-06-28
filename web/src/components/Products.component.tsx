@@ -1,10 +1,12 @@
-import { asArray } from '#web/core/common.utils.ts';
-import { fetchAllProducts } from '#web/fetchers/product.fetchers.ts';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import type { Nullable } from '@task/shared/types/core.types';
 import type { Product } from '@task/shared/types/domain.types';
 import { errorToString } from '@task/shared/utils/transform.utils';
 import { Suspense } from 'react';
+
+import { asArray } from '#web/core/common.utils.ts';
+import { fetchAllProducts } from '#web/fetchers/product.fetchers.ts';
+
 import CN from './Products.module.css';
 
 export const ProductsPage = () => (

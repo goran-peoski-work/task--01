@@ -1,8 +1,8 @@
-import type { Comp } from '#web/core/common.types.ts';
-
-import { fetchPing } from '#web/fetchers/simple.fetchers.ts';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Suspense } from 'react';
+
+import type { Comp } from '#web/core/common.types.ts';
+import { fetchPing } from '#web/fetchers/simple.fetchers.ts';
 
 import CN from './Ping.module.css';
 

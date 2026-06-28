@@ -1,5 +1,6 @@
-import { Root } from '#web/components/Root.component.tsx';
 import { createRoot } from 'react-dom/client';
+
+import { Root } from '#web/components/Root.component.tsx';
 
 import '#web/index.css';
 

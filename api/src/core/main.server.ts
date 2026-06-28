@@ -1,13 +1,14 @@
+import { Nullable, Result } from '@task/shared/types/core.types';
+import { UnaryAsync } from '@task/shared/types/functional.types';
+import { errorToString } from '@task/shared/utils/transform.utils';
+import Fastify from 'fastify';
+
 import {
     serverErrorHandler,
     serverNotFoundHandler,
     serverPreSerializationHook,
 } from '#api/core/interceptors.server.js';
 import { routesV1 } from '#api/routes/version1.routes.js';
-import { Nullable, Result } from '@task/shared/types/core.types';
-import { UnaryAsync } from '@task/shared/types/functional.types';
-import { errorToString } from '@task/shared/utils/transform.utils';
-import Fastify from 'fastify';
 
 type ServerInstance = ReturnType<typeof Fastify>;
 
