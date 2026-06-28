@@ -1,15 +1,9 @@
+import { DataResponse } from '@task/shared/types/communication.types';
+import { NullaryAsync } from '@task/shared/types/functional.types';
 import { FastifyPluginAsync } from 'fastify';
 
-type PingGetHandler = () => Promise<{
-    success: true;
-    data: string;
-}>;
-
 export const pingRoute: FastifyPluginAsync = async (instance) => {
-    const pingGetHandler: PingGetHandler = async () => ({
-        success: true,
-        data: 'pong',
-    });
+    const getPing: NullaryAsync<DataResponse<string>> = async () => ({ data: 'pong' });
 
-    instance.get('/ping', pingGetHandler);
+    instance.get('', getPing);
 };

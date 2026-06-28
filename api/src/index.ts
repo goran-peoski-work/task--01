@@ -1,6 +1,7 @@
+import { SERVER_HOST, SERVER_PORT } from '#api/core/env.server.js';
 import { startServer } from '#api/core/main.server.js';
 
-const result = await startServer({ port: 3000, host: '0.0.0.0' });
+const result = await startServer({ port: SERVER_PORT, host: SERVER_HOST });
 
 if (result.success) {
     result.server.log.info(`Listening @ ${result.data}...`);

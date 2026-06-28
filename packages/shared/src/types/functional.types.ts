@@ -1,5 +1,3 @@
-export type Nullable<T> = T | null | undefined;
-
 export type SideEffect = () => void;
 export type Nullary<R> = () => R;
 export type Unary<A, R> = (a: A) => R;
