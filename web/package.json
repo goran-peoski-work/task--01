@@ -17,10 +17,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@task/shared": "file:../packages/shared",
     "@tanstack/react-query": "^5.101.0",
+    "@task/shared": "file:../packages/shared",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "react-use": "^17.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

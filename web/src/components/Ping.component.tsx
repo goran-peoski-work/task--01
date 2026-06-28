@@ -1,11 +1,12 @@
-import type { Component } from '#web/core.types.ts';
-import { fetchPing } from '#web/fetchers/ping.fetcher.ts';
+import type { Comp } from '#web/core/common.types.ts';
+
+import { fetchPing } from '#web/fetchers/simple.fetchers.ts';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Suspense } from 'react';
 
 import CN from './Ping.module.css';
 
-const PingContent: Component = () => {
+const PingContent: Comp = () => {
     const {
         data: { json, ok },
     } = useSuspenseQuery({
@@ -19,9 +20,9 @@ const PingContent: Component = () => {
     return <p>Ping {json.data}</p>;
 };
 
-const PingLoading: Component = () => <div>Pinging API server...</div>;
+const PingLoading: Comp = () => <div>Pinging API server...</div>;
 
-export const Ping: Component = () => (
+export const Ping: Comp = () => (
     <Suspense fallback={<PingLoading />}>
         <PingContent />
     </Suspense>

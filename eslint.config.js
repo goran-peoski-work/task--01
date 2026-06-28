@@ -5,6 +5,9 @@ import tsEslint from 'typescript-eslint';
 
 export default defineConfig([
     {
+        ignores: ['dist/'],
+    },
+    {
         files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
         plugins: { js },
         extends: ['js/recommended'],
@@ -23,6 +26,8 @@ export default defineConfig([
             curly: ['error', 'multi-line'],
             'arrow-body-style': ['error', 'as-needed'],
             'object-shorthand': ['error', 'always'],
+            yoda: ['error', 'always'],
+            'no-useless-rename': 'error',
         },
     },
 ]);
