@@ -22,7 +22,7 @@
     "check": "npm run check:types && npm run check:lint && npm run check:format",
     "fix:lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "fix:format": "prettier --write . --log-level warn",
-    "fix:watch": "onchange --delay 10000 -i \"./**/*.{js,jsx,ts,tsx}\" -e \"./**/dist/**\" -- npm run fix || true",
+    "fix:watch": "onchange --delay 10000 -i \"./**/*.{js,jsx,ts,tsx}\" -e \"**/dist/**\" -- npm run fix || true",
     "fix": "npm run fix:lint && npm run fix:format",
     "build": "npm run build:shared && npm run build:api && npm run build:web",
     "predev": "npm run build:shared",

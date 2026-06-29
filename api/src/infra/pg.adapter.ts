@@ -29,8 +29,20 @@ type PgProductRepo = Unary<Injected<void, { pool: pg.Pool }>, ProductRepo>;
 
 export const pgProductRepo: PgProductRepo = ({ deps }) => ({
     findAll: async () => {
+        const text = `
+                SELECT id,
+                       created_at  AS "createdAt",
+                       modified_at AS "modifiedAt",
+                       deleted_at  AS "deletedAt",
+                       archived_at AS "archivedAt",
+                       name,
+                       price,
+                       stock,
+                       is_active   AS "isActive"
+                FROM products;
+            `;
+
         try {
-            const text = 'SELECT * FROM products;';
             return dbQuery<Product>({ text, deps, validator: isProduct });
         } catch (e) {
             return { success: false, data: null, error: errorToString(e) || 'DB_ERROR @ pgProductRepo.findAll()' };
@@ -38,7 +50,24 @@ export const pgProductRepo: PgProductRepo = ({ deps }) => ({
     },
 
     findById: async ({ id }) => {
-        const text = 'SELECT * FROM products WHERE id = $1;';
-        return dbQuery<Product>({ text, values: [id], deps, validator: isProduct });
+        const text = `
+            SELECT id,
+                   created_at  AS "createdAt",
+                   modified_at AS "modifiedAt",
+                   deleted_at  AS "deletedAt",
+                   archived_at AS "archivedAt",
+                   name,
+                   price,
+                   stock,
+                   is_active   AS "isActive"
+            FROM products
+            WHERE id = $1;
+        `;
+
+        try {
+            return dbQuery<Product>({ text, values: [id], deps, validator: isProduct });
+        } catch (e) {
+            return { success: false, data: null, error: errorToString(e) || 'DB_ERROR @ pgProductRepo.findById()' };
+        }
     },
 });
