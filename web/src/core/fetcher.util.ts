@@ -1,4 +1,5 @@
 import type { ApiDataResponse, ApiErrorResponse, ApiResponse } from '@task/shared/types/communication.types';
+import type { TypeValidator } from '@task/shared/types/core.types';
 import type { NullaryAsync } from '@task/shared/types/functional.types';
 import { errorToString } from '@task/shared/utils/transform.utils';
 
@@ -6,7 +7,7 @@ import type { ParsedJson } from '#web/core/common.types.ts';
 
 type FetcherOptions<D = unknown, E = unknown> = {
     path: string;
-    validator: ($: unknown) => $ is ApiDataResponse<D> | ApiErrorResponse<E>;
+    validator: TypeValidator<ApiDataResponse<D> | ApiErrorResponse<E>>;
     requestInit?: RequestInit;
 };
 

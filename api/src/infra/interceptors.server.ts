@@ -3,12 +3,12 @@ import { ApiResponse } from '@task/shared/types/communication.types';
 import { nowAsTzZulu } from '@task/shared/utils/time.util';
 import { FastifyError, FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
-import { SERVER_TIME_ZONE } from '#api/core/env.server.js';
+import { SERVER_TIME_ZONE } from '#api/infra/env.server.js';
 import {
     RouteNotFoundApiResponse,
     RouteValidationErrorApiResponse,
     ServerErrorApiResponse,
-} from '#api/core/server.types.js';
+} from '#api/infra/server.types.js';
 
 type ServerPreSerializationHook = (request: FastifyRequest, reply: FastifyReply, payload: unknown) => Promise<unknown>;
 
@@ -24,6 +24,13 @@ export const serverPreSerializationHook: ServerPreSerializationHook = async (req
         ts: ts ? ts : nowAsTzZulu(SERVER_TIME_ZONE),
         data: data ? data : null,
         error: error ? error : null,
+        type: error
+            ? 'string' === typeof error
+                ? 'error-string'
+                : Array.isArray(error)
+                  ? 'error-array'
+                  : 'unknown'
+            : undefined,
     };
 };
 

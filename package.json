@@ -18,7 +18,7 @@
     "check:types": "npm run build --workspace=@task/shared && npm run check:types --workspace=@task/api --workspace=@task/web",
     "check:lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "check:format": "prettier --check .",
-    "check:watch": "onchange -i \"./**/*.{js,jsx,ts,tsx}\" -e \"./**/dist/**\" -- npm run check || true",
+    "check:watch": "onchange -i \"./**/*.{js,jsx,ts,tsx}\" -e \"**/dist/**\" -- npm run check || true",
     "check": "npm run check:types && npm run check:lint && npm run check:format",
     "fix:lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "fix:format": "prettier --write . --log-level warn",
@@ -44,5 +44,8 @@
     "onchange": "^7.1.0",
     "prettier": "^3.8.4",
     "typescript-eslint": "^8.61.1"
+  },
+  "dependencies": {
+    "pg": "^8.22.0"
   }
 }

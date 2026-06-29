@@ -13,9 +13,11 @@ export type DataResponse<T = unknown> = {
 };
 
 export type ErrorResponse<T = unknown> = {
-    type: 'error-string' | 'error-array' | 'error-object' | 'unknown';
+    type?: 'error-string' | 'error-array' | 'error-object' | 'unknown';
     error: T;
 };
+
+export type EitherResponse<D, E> = DataResponse<D> | ErrorResponse<E>;
 
 export type ApiDataResponse<T = unknown> = { error: null } & DataResponse<T> & MetaResponse;
 export type ApiErrorResponse<T = unknown> = { data: null } & ErrorResponse<T> & MetaResponse;
