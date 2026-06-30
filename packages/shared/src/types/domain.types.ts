@@ -6,9 +6,8 @@ export type Product = {
     stock: number;
 };
 
-// FIXME: split this into a DTO and a domain models, one for the API and one for the DB
-export type CartItem = {
-    cartId: string;
+export type AddToCartRequestDto = {
     productId: string;
     quantity: number;
+    userId: string;
 };

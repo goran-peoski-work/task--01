@@ -7,35 +7,37 @@ import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 
 import { getAllProductsUseCase, getOneProductUseCase, ProductRepo } from '#api/ports/ProductRepo.port.js';
 
-type GetAllProducts = NullaryAsync<EitherResponse<Product[], string>>;
-type GetOneProduct = BinaryAsync<FastifyRequest, FastifyReply, EitherResponse<Product[], string>>;
-type CreateProductRoute = Unary<Injected<void, { productRepo: ProductRepo }>, FastifyPluginAsync>;
+type ProductRoute = Unary<Injected<void, { productRepo: ProductRepo }>, FastifyPluginAsync>;
 
-export const productRoute: CreateProductRoute =
-    ({ deps }) =>
-    async (instance) => {
-        const getAllProducts: GetAllProducts = async () => {
-            const { data, error, success } = await getAllProductsUseCase({ deps });
+export const productRoute: ProductRoute = ({ deps }) => {
+    type GetAllProducts = NullaryAsync<EitherResponse<Product[], string>>;
 
-            return success
-                ? data.length
-                    ? { data }
-                    : { hc: 404, error: 'No products found' }
-                : { type: 'error-string', error };
-        };
+    const getAllProducts: GetAllProducts = async () => {
+        const { data, error, success } = await getAllProductsUseCase({ deps });
 
-        const getOneProduct: GetOneProduct = async (request) => {
-            const { id } = (request.params ?? {}) as { id: string };
+        return success
+            ? data.length
+                ? { data }
+                : { hc: 404, error: 'No products found' }
+            : { type: 'error-string', error };
+    };
 
-            const { data, error, success } = await getOneProductUseCase({ id, deps });
+    type GetOneProduct = BinaryAsync<FastifyRequest, FastifyReply, EitherResponse<Product[], string>>;
 
-            return success
-                ? data.length
-                    ? { data }
-                    : { hc: 404, error: 'Product not found' }
-                : { type: 'error-string', error: errorToString(error) };
-        };
+    const getOneProduct: GetOneProduct = async (request) => {
+        const { id } = (request.params ?? {}) as { id: string };
 
+        const { data, error, success } = await getOneProductUseCase({ id, deps });
+
+        return success
+            ? data.length
+                ? { data }
+                : { hc: 404, error: 'Product not found' }
+            : { type: 'error-string', error: errorToString(error) };
+    };
+
+    return async (instance) => {
         instance.get('/all', getAllProducts);
         instance.get('/:id', getOneProduct);
     };
+};
